@@ -1,0 +1,7 @@
+{
+  "match": {
+    "indices": "geo",
+    "match_field": "zip",
+    "enrich_fields": ["point"]
+  }
+}

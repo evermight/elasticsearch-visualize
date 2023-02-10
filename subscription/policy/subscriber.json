@@ -1,0 +1,7 @@
+{
+  "match": {
+    "indices": "subscriber",
+    "match_field": "subscriber_id",
+    "enrich_fields": ["address", "birth_year", "city", "geo", "state", "zip"]
+  }
+}

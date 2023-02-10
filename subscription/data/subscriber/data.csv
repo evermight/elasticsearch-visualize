@@ -1,4 +1,4 @@
-customer_id,address,city,state,zip,birth_year
+subscriber_id,address,city,state,zip,birth_year
 1,777 Brockton Avenue,Abington,MA,2351,1996
 2,30 Memorial Drive,Avon,MA,2322,1977
 3,250 Hartford Avenue,Bellingham,MA,2019,1964

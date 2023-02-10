@@ -6,7 +6,7 @@ signupDurationMonths=13
 maximumActiveMonths=36
 numberOfCustomers=234
 
-echo 'customer_id,pay_date' > data.csv
+echo 'subscriber_id,pay_date' > data.csv
 for ((c=1; c<=$numberOfCustomers; c++))
 do
   signupMonth=$(($earliestSignupMonth+($signupDurationMonths-$earliestSignupMonth)*$RANDOM/32767))

@@ -1,0 +1,13 @@
+{
+  "processors" : [
+    {
+      "enrich" : {
+        "description": "Add 'subscriber' data based on 'subscriber_id'",
+        "policy_name": "subscriber_policy",
+        "field" : "subscriber_id",
+        "target_field": "subscriber",
+        "max_matches": "1"
+      }
+    }
+  ]
+}

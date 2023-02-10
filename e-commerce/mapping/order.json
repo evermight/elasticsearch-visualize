@@ -1,0 +1,39 @@
+{
+  "properties": {
+    "order_items": {
+      "type": "nested",
+      "properties": {
+        "product_id": {
+          "type": "long"
+        },
+        "product": {
+          "properties": {
+            "name": {
+              "type": "keyword"
+            },
+            "product_id": {
+              "type": "long"
+            },
+            "price": {
+              "type": "long"
+            }
+          }
+        }
+      }
+    },
+    "customer": {
+      "properties": {
+        "state": {
+          "type": "keyword"
+        },
+        "geo": {
+          "properties": {
+            "point": {
+              "type": "geo_point"
+            }
+          }
+        }
+      }
+    }
+  }
+}

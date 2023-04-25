@@ -2,6 +2,19 @@ DELIMITER $$
 CREATE PROCEDURE SeedData()
 BEGIN
 
+DECLARE user_done INT DEFAULT FALSE;
+DECLARE prj_id INT DEFAULT 0;
+DECLARE prj_name VARCHAR(100) DEFAULT '';
+DECLARE project_done INT DEFAULT FALSE;
+
+DECLARE project_cursor CURSOR FOR SELECT project_id,project_name FROM project;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET project_done = TRUE;
+
+---- DECLARE user_cursor CURSOR FOR SELECT * FROM user;
+---- DECLARE CONTINUE HANDLER FOR NOT FOUND SET user_done = TRUE;
+
+
+
 INSERT INTO user (`user_name`) VALUES ('Aggrim'), ('Terry'), ('Farnaz'), ('Stephanie'), ('Chee Sam'), ('Roberto'), ('Yan');
 INSERT INTO project (`project_name`) VALUES ('St. Michael Hospital'), ('Jorge Chavez International Airport'),
 ('Gambir Train Station'),
@@ -32,19 +45,12 @@ INSERT INTO vocabulary (`term`, `type`) VALUES
 ('CSS fix', 't'),
 ('Bug fix', 't');
 
-DECLARE user_done INT DEFAULT FALSE;
-DECLARE user_cursor CURSOR FOR SELECT * FROM user;
-DECLARE CONTINUE HANDLER FOR NOT FOUND SET user_done = TRUE;
-
-DECLARE prj_name VARCHAR(100) DEFAULT '';
-DECLARE project_done INT DEFAULT FALSE;
-DECLARE project_cursor CURSOR FOR SELECT project_name FROM project;
-DECLARE CONTINUE HANDLER FOR NOT FOUND SET project_done = TRUE;
-
 OPEN project_cursor;
 REPEAT
-	FETCH project_cursor INTO prj_name;
-	INSERT INTO epic (`epic_name`) values (prj_name);
+	FETCH project_cursor INTO prj_id, prj_name;
+	INSERT INTO epic (`project_id`, `epic_name`) values (prj_id, prj_name);
+	SELECT MAX(epic_id) INTO @epic_id FROM epic;
+	INSERT INTO story (`epic_id`, `story_name`) VALUES (@epic_id, 'test');
 UNTIL project_done END REPEAT;
 
 END $$

@@ -2,6 +2,8 @@ DELIMITER $$
 CREATE PROCEDURE SeedData()
 BEGIN
 
+DECLARE offset_begin_date INT DEFAULT 30;
+DECLARE max_priority INT DEFAULT 5;
 DECLARE user_done INT DEFAULT FALSE;
 DECLARE prj_id INT DEFAULT 0;
 DECLARE prj_name VARCHAR(100) DEFAULT '';
@@ -57,7 +59,10 @@ REPEAT
 		OPEN epic_cursor;
 		REPEAT
 			FETCH epic_cursor INTO epic_name;
-			INSERT INTO epic (`project_id`, `epic_name`) values (prj_id, epic_name);
+			INSERT INTO epic (`project_id`, `epic_name`, `start_date`, `due_date`)
+			VALUES (prj_id, epic_name,
+				DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY),
+				DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY));
 			SELECT MAX(epic_id) INTO @epic_id FROM epic;
 
 			BEGIN
@@ -68,7 +73,11 @@ REPEAT
 				OPEN story_cursor;
 				REPEAT
 					FETCH story_cursor INTO story_name;
-					INSERT INTO story (`epic_id`, `story_name`) VALUES (@epic_id, story_name);
+					INSERT INTO story (`epic_id`, `story_name`, `priority`, `start_date`, `due_date`)
+					VALUES (
+						@epic_id, story_name, FLOOR(RAND()*max_priority),
+						DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY),
+						DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY));
 					SELECT MAX(story_id) INTO @story_id FROM story;
 
 					BEGIN
@@ -80,7 +89,10 @@ REPEAT
 						REPEAT
 							FETCH task_cursor INTO task_name;
 							SELECT user_id INTO @uid FROM user ORDER BY RAND() LIMIT 1;
-							INSERT INTO task (`story_id`, `task_name`, `user_id`) VALUES (@story_id, task_name, @uid);
+							INSERT INTO task (`story_id`, `task_name`, `user_id`, `priority`, `start_date`, `due_date`)
+							VALUES (@story_id, task_name, @uid, FLOOR(RAND()*max_priority),
+								DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY),
+								DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY));
 							SELECT MAX(task_id) INTO @task_id FROM task;
 
 						UNTIL task_done END REPEAT;

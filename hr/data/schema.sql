@@ -34,10 +34,12 @@ CREATE TABLE IF NOT EXISTS `task` (
   `task_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `task_name` varchar(100) NOT NULL,
   `story_id` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
   `start_date` datetime NULL,
   `end_date` datetime NULL,
   PRIMARY KEY (`task_id`),
-  CONSTRAINT `task_ibfk_1` FOREIGN KEY (`story_id`) REFERENCES `story` (`story_id`) ON DELETE CASCADE
+  CONSTRAINT `task_ibfk_1` FOREIGN KEY (`story_id`) REFERENCES `story` (`story_id`) ON DELETE CASCADE,
+  CONSTRAINT `task_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `time` (

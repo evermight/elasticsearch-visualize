@@ -49,18 +49,45 @@ REPEAT
 	FETCH project_cursor INTO prj_id, prj_name;
 
 	BEGIN
-		DECLARE v_epic_name VARCHAR(100) DEFAULT '';
-		DECLARE v_epic_done INT DEFAULT FALSE;
-		DECLARE v_epic_cursor CURSOR FOR SELECT term FROM vocabulary WHERE type = 'e';
-		DECLARE CONTINUE HANDLER FOR NOT FOUND SET v_epic_done = TRUE;
+		DECLARE epic_name VARCHAR(100) DEFAULT '';
+		DECLARE epic_done INT DEFAULT FALSE;
+		DECLARE epic_cursor CURSOR FOR SELECT term FROM vocabulary WHERE type = 'e';
+		DECLARE CONTINUE HANDLER FOR NOT FOUND SET epic_done = TRUE;
 
-		OPEN v_epic_cursor;
+		OPEN epic_cursor;
 		REPEAT
-			FETCH v_epic_cursor INTO v_epic_name;
-			INSERT INTO epic (`project_id`, `epic_name`) values (prj_id, v_epic_name);
+			FETCH epic_cursor INTO epic_name;
+			INSERT INTO epic (`project_id`, `epic_name`) values (prj_id, epic_name);
 			SELECT MAX(epic_id) INTO @epic_id FROM epic;
-			INSERT INTO story (`epic_id`, `story_name`) VALUES (@epic_id, 'test');
-		UNTIL v_epic_done END REPEAT;
+
+			BEGIN
+				DECLARE story_name VARCHAR(100) DEFAULT '';
+				DECLARE story_done INT DEFAULT FALSE;
+				DECLARE story_cursor CURSOR FOR SELECT term FROM vocabulary WHERE type = 's';
+				DECLARE CONTINUE HANDLER FOR NOT FOUND SET story_done = TRUE;
+				OPEN story_cursor;
+				REPEAT
+					FETCH story_cursor INTO story_name;
+					INSERT INTO story (`epic_id`, `story_name`) VALUES (@epic_id, story_name);
+					SELECT MAX(story_id) INTO @story_id FROM story;
+
+					BEGIN
+						DECLARE task_name VARCHAR(100) DEFAULT '';
+						DECLARE task_done INT DEFAULT FALSE;
+						DECLARE task_cursor CURSOR FOR SELECT term FROM vocabulary WHERE type = 't';
+						DECLARE CONTINUE HANDLER FOR NOT FOUND SET task_done = TRUE;
+						OPEN task_cursor;
+						REPEAT
+							FETCH task_cursor INTO task_name;
+							SELECT user_id INTO @uid FROM user ORDER BY RAND() LIMIT 1;
+							INSERT INTO task (`story_id`, `task_name`, `user_id`) VALUES (@story_id, task_name, @uid);
+							SELECT MAX(task_id) INTO @task_id FROM task;
+
+						UNTIL task_done END REPEAT;
+					END;
+				UNTIL story_done END REPEAT;
+			END;
+		UNTIL epic_done END REPEAT;
 	END;
 UNTIL project_done END REPEAT;
 

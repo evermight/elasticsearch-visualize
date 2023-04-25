@@ -6,7 +6,6 @@ DECLARE user_done INT DEFAULT FALSE;
 DECLARE prj_id INT DEFAULT 0;
 DECLARE prj_name VARCHAR(100) DEFAULT '';
 DECLARE project_done INT DEFAULT FALSE;
-
 DECLARE project_cursor CURSOR FOR SELECT project_id,project_name FROM project;
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET project_done = TRUE;
 
@@ -48,9 +47,21 @@ INSERT INTO vocabulary (`term`, `type`) VALUES
 OPEN project_cursor;
 REPEAT
 	FETCH project_cursor INTO prj_id, prj_name;
-	INSERT INTO epic (`project_id`, `epic_name`) values (prj_id, prj_name);
-	SELECT MAX(epic_id) INTO @epic_id FROM epic;
-	INSERT INTO story (`epic_id`, `story_name`) VALUES (@epic_id, 'test');
+
+	BEGIN
+		DECLARE v_epic_name VARCHAR(100) DEFAULT '';
+		DECLARE v_epic_done INT DEFAULT FALSE;
+		DECLARE v_epic_cursor CURSOR FOR SELECT term FROM vocabulary WHERE type = 'e';
+		DECLARE CONTINUE HANDLER FOR NOT FOUND SET v_epic_done = TRUE;
+
+		OPEN v_epic_cursor;
+		REPEAT
+			FETCH v_epic_cursor INTO v_epic_name;
+			INSERT INTO epic (`project_id`, `epic_name`) values (prj_id, v_epic_name);
+			SELECT MAX(epic_id) INTO @epic_id FROM epic;
+			INSERT INTO story (`epic_id`, `story_name`) VALUES (@epic_id, 'test');
+		UNTIL v_epic_done END REPEAT;
+	END;
 UNTIL project_done END REPEAT;
 
 END $$

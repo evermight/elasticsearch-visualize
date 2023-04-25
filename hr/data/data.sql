@@ -1,0 +1,53 @@
+DELIMITER $$
+CREATE PROCEDURE SeedData()
+BEGIN
+
+INSERT INTO user (`user_name`) VALUES ('Aggrim'), ('Terry'), ('Farnaz'), ('Stephanie'), ('Chee Sam'), ('Roberto'), ('Yan');
+INSERT INTO project (`project_name`) VALUES ('St. Michael Hospital'), ('Jorge Chavez International Airport'),
+('Gambir Train Station'),
+('Panama Canal Museum'),
+('Alouette Fine Dining');
+
+
+CREATE TABLE IF NOT EXISTS `vocabulary` (
+  `term` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO vocabulary (`term`, `type`) VALUES
+('Website Development', 'e'),
+('CRM Integration', 'e'),
+('Mobile Game', 'e'),
+('Single Sign-on', 's'),
+('Content Migration', 's'),
+('Database Optimization', 's'),
+('Security Audit', 's'),
+('Revision', 's'),
+('Technical translation', 't'),
+('Testing', 't'),
+('Setup', 't'),
+('Timezone adjustments', 't'),
+('Unit tests', 't'),
+('Integration tests', 't'),
+('CSS fix', 't'),
+('Bug fix', 't');
+
+DECLARE user_done INT DEFAULT FALSE;
+DECLARE user_cursor CURSOR FOR SELECT * FROM user;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET user_done = TRUE;
+
+DECLARE prj_name VARCHAR(100) DEFAULT '';
+DECLARE project_done INT DEFAULT FALSE;
+DECLARE project_cursor CURSOR FOR SELECT project_name FROM project;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET project_done = TRUE;
+
+OPEN project_cursor;
+REPEAT
+	FETCH project_cursor INTO prj_name;
+	INSERT INTO epic (`epic_name`) values (prj_name);
+UNTIL project_done END REPEAT;
+
+END $$
+DELIMITER ;
+
+CALL SeedData();

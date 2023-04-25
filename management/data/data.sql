@@ -94,7 +94,18 @@ REPEAT
 								DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY),
 								DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY));
 							SELECT MAX(task_id) INTO @task_id FROM task;
+							SELECT start_date, due_date INTO @task_start_date, @task_due_date FROM task WHERE task_id = @task_id;
 
+							BEGIN
+								DECLARE date_iterator DATE DEFAULT @task_start_date;
+								REPEAT
+									INSERT INTO time (`task_id`, `user_id`, `hours`, `date`)
+									VALUES (@task_id, @uid, FLOOR(RAND()*80)/10, date_iterator);
+
+									SET date_iterator = DATE_ADD(date_iterator, INTERVAL 1 DAY);
+								UNTIL date_iterator > @task_due_date END REPEAT;
+
+							END;
 						UNTIL task_done END REPEAT;
 					END;
 				UNTIL story_done END REPEAT;

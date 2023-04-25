@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `time` (
   `task_id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `hours` decimal(10,2) NOT NULL,
-  `start_date` date NOT NULL,
+  `date` date NOT NULL,
   PRIMARY KEY (`time_id`),
   CONSTRAINT `time_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `task` (`task_id`) ON DELETE CASCADE,
   CONSTRAINT `time_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)

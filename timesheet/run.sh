@@ -7,14 +7,14 @@ if [ "$ELASTICSSL" = "true" ]; then
   hostprotocol="https"
 fi
 
-curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/management"
-#curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/zip_geo/_mapping" \
-#-H "Content-Type: application/json" \
-#-d @$PROJECTPATH/mapping/zip_geo.json
+curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/timesheet"
+curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/timesheet/_mapping" \
+-H "Content-Type: application/json" \
+-d @$PROJECTPATH/mapping/timesheet.json
 
-
-
-
+curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/_ingest/pipeline/timesheet" \
+-H "Content-Type: application/json" \
+-d @$PROJECTPATH/pipeline/timesheet.json
 
 logstashconf=`cat ${PROJECTPATH}/logstash/logstash.conf`
 logstashconf="${logstashconf//\#\#JDBCJARFILE\#\#/"$JDBCJARFILE"}"

@@ -2,7 +2,7 @@
   "processors": [
     {
       "json": {
-        "field": "tasks"
+        "field": "epics"
       }
     }
   ]

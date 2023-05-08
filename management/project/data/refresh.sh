@@ -1,4 +1,7 @@
-mysql -e 'drop database management;'
-mysql -e 'create database management;'
-mysql management < schema.sql;
-#mysql management < data.sql;
+#!/bin/bash
+
+source ../.env
+mysql -e "drop database $INDEXNAME"
+mysql -e "create database $INDEXNAME"
+mysql project < schema.sql;
+#mysql project < data.sql;

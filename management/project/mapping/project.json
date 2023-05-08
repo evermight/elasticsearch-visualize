@@ -23,17 +23,9 @@
             "story_name": {
               "type": "text"
             },
-            "tasks": {
+            "hours": {
               "properties": {
-                "task_id": {
-                  "type": "long"
-                },
-                "task_name": {
-                  "type": "keyword"
-                },
-                "hours": {
-                  "properties": {
-                    "task_id": {
+                    "story_id": {
                       "type": "long"
                     },
                     "user_id": {
@@ -41,8 +33,19 @@
                     },
                     "hours": {
                       "type": "double"
-                    }
-                  }
+                    },
+		    "work_done": {
+                      "type": "text"
+		    }
+              }
+            },
+            "tasks": {
+              "properties": {
+                "task_id": {
+                  "type": "long"
+                },
+                "task_name": {
+                  "type": "keyword"
                 }
               }
             }

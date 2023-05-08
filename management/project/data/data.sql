@@ -59,10 +59,14 @@ REPEAT
 		OPEN epic_cursor;
 		REPEAT
 			FETCH epic_cursor INTO epic_name;
-			INSERT INTO epic (`project_id`, `epic_name`, `start_date`, `due_date`)
+			SET @epic_start_date = DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY);
+			SET @epic_due_date = DATE_ADD(@epic_start_date, INTERVAL FLOOR(RAND()*365) DAY);
+			SET @epic_completion_date = DATE_ADD(@epic_start_date, INTERVAL FLOOR(RAND()*365) DAY);
+			INSERT INTO epic (`project_id`, `epic_name`, `start_date`, `due_date`, `completion_date`)
 			VALUES (prj_id, epic_name,
-				DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY),
-				DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY));
+				@epic_start_date,
+				@epic_due_date,
+			        @epic_completion_date);
 			SELECT MAX(epic_id) INTO @epic_id FROM epic;
 
 			BEGIN
@@ -73,13 +77,16 @@ REPEAT
 				OPEN story_cursor;
 				REPEAT
 					FETCH story_cursor INTO story_name;
-					INSERT INTO story (`epic_id`, `story_name`, `priority`, `start_date`, `due_date`)
+					SET @story_start_date = DATE_SUB(@epic_start_date, INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY);
+					SET @story_due_date = DATE_ADD(@story_start_date, INTERVAL FLOOR(RAND()*365) DAY);
+					SET @story_completion_date = DATE_ADD(@story_start_date, INTERVAL FLOOR(RAND()*365) DAY);
+					INSERT INTO story (`epic_id`, `story_name`, `priority`, `start_date`, `due_date`, `completion_date`)
 					VALUES (
 						@epic_id, story_name, FLOOR(RAND()*max_priority),
-						DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY),
-						DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY));
+						@story_start_date,
+						@story_due_date,
+						@story_completion_date);
 					SELECT MAX(story_id) INTO @story_id FROM story;
-					SELECT start_date, due_date INTO @story_start_date, @story_due_date FROM story WHERE story_id = @story_id;
 
 					BEGIN
 						DECLARE date_iterator DATE DEFAULT @story_start_date;
@@ -100,11 +107,15 @@ REPEAT
 						OPEN task_cursor;
 						REPEAT
 							FETCH task_cursor INTO task_name;
+							SET @task_start_date = DATE_SUB(@story_start_date, INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY);
+							SET @task_due_date = DATE_ADD(@task_start_date, INTERVAL FLOOR(RAND()*365) DAY);
+							SET @task_completion_date = DATE_ADD(@task_start_date, INTERVAL FLOOR(RAND()*365) DAY);
 							SELECT user_id INTO @uid FROM user ORDER BY RAND() LIMIT 1;
-							INSERT INTO task (`story_id`, `task_name`, `user_id`, `priority`, `start_date`, `due_date`)
+							INSERT INTO task (`story_id`, `task_name`, `user_id`, `priority`, `start_date`, `due_date`, `completion_date`)
 							VALUES (@story_id, task_name, @uid, FLOOR(RAND()*max_priority),
-								DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY),
-								DATE_SUB(NOW(), INTERVAL offset_begin_date + FLOOR(RAND()*365) DAY));
+								@task_start_date,
+								@task_due_date,
+								@task_completion_date);
 						UNTIL task_done END REPEAT;
 					END;
 				UNTIL story_done END REPEAT;

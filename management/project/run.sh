@@ -7,14 +7,14 @@ if [ "$ELASTICSSL" = "true" ]; then
   hostprotocol="https"
 fi
 
-curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/timesheet"
-curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/timesheet/_mapping" \
+curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/$INDEXNAME"
+curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/$INDEXNAME/_mapping" \
 -H "Content-Type: application/json" \
--d @$PROJECTPATH/mapping/timesheet.json
+-d @$PROJECTPATH/mapping/project.json
 
-curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/_ingest/pipeline/timesheet" \
+curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/_ingest/pipeline/project" \
 -H "Content-Type: application/json" \
--d @$PROJECTPATH/pipeline/timesheet.json
+-d @$PROJECTPATH/pipeline/project.json
 
 logstashconf=`cat ${PROJECTPATH}/logstash/logstash.conf`
 logstashconf="${logstashconf//\#\#JDBCJARFILE\#\#/"$JDBCJARFILE"}"
@@ -25,6 +25,7 @@ logstashconf="${logstashconf//\#\#ELASTICHOST\#\#/"$ELASTICHOST"}"
 logstashconf="${logstashconf//\#\#ELASTICSSL\#\#/"$ELASTICSSL"}"
 logstashconf="${logstashconf//\#\#ELASTICUSER\#\#/"$ELASTICUSER"}"
 logstashconf="${logstashconf//\#\#ELASTICPASS\#\#/"$ELASTICPASS"}"
+logstashconf="${logstashconf//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
 /usr/share/logstash/bin/logstash -e "$logstashconf"
 
 #curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/_enrich/policy/zip_geo_policy" \

@@ -25,6 +25,7 @@ logstashconf="${logstashconf//\#\#ELASTICHOST\#\#/"$ELASTICHOST"}"
 logstashconf="${logstashconf//\#\#ELASTICSSL\#\#/"$ELASTICSSL"}"
 logstashconf="${logstashconf//\#\#ELASTICUSER\#\#/"$ELASTICUSER"}"
 logstashconf="${logstashconf//\#\#ELASTICPASS\#\#/"$ELASTICPASS"}"
+logstashconf="${logstashconf//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
 /usr/share/logstash/bin/logstash -e "$logstashconf"
 
 #curl -X PUT -u $ELASTICUSER:$ELASTICPASS "$hostprotocol://$ELASTICHOST/_enrich/policy/zip_geo_policy" \

@@ -15,6 +15,18 @@
         "epic_name": {
           "type": "text"
         },
+        "due_date": {
+          "type": "date",
+	  "format": "yyyy-MM-dd"
+        },
+        "start_date": {
+          "type": "date",
+	  "format": "yyyy-MM-dd"
+        },
+        "completion_date": {
+          "type": "date",
+	  "format": "yyyy-MM-dd"
+        },
         "stories": {
           "properties": {
             "story_id": {
@@ -22,6 +34,18 @@
             },
             "story_name": {
               "type": "text"
+            },
+            "due_date": {
+              "type": "date",
+              "format": "yyyy-MM-dd"
+            },
+            "start_date": {
+              "type": "date",
+              "format": "yyyy-MM-dd"
+            },
+            "completion_date": {
+              "type": "date",
+	      "format": "yyyy-MM-dd"
             },
             "hours": {
               "properties": {
@@ -36,7 +60,11 @@
                     },
 		    "work_done": {
                       "type": "text"
-		    }
+		    },
+            "date": {
+              "type": "date",
+              "format": "yyyy-MM-dd"
+            }
               }
             },
             "tasks": {
@@ -46,7 +74,19 @@
                 },
                 "task_name": {
                   "type": "keyword"
-                }
+                },
+            "due_date": {
+              "type": "date",
+              "format": "yyyy-MM-dd"
+            },
+            "start_date": {
+              "type": "date",
+              "format": "yyyy-MM-dd"
+            },
+            "completion_date": {
+              "type": "date",
+	      "format": "yyyy-MM-dd"
+            }
               }
             }
           }

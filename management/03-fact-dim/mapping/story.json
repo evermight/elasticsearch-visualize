@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "story_id": {
+      "type": "long"
+    },
+    "story_name": {
+      "type": "text"
+    },
+    "due_date": {
+      "type": "date",
+      "format": "yyyy-MM-dd"
+    },
+    "start_date": {
+      "type": "date",
+      "format": "yyyy-MM-dd"
+    },
+    "completion_date": {
+      "type": "date",
+      "format": "yyyy-MM-dd"
+    }
+  }
+}

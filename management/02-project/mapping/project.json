@@ -17,15 +17,15 @@
         },
         "due_date": {
           "type": "date",
-	  "format": "yyyy-MM-dd"
+          "format": "yyyy-MM-dd"
         },
         "start_date": {
           "type": "date",
-	  "format": "yyyy-MM-dd"
+          "format": "yyyy-MM-dd"
         },
         "completion_date": {
           "type": "date",
-	  "format": "yyyy-MM-dd"
+          "format": "yyyy-MM-dd"
         },
         "stories": {
           "properties": {
@@ -45,26 +45,26 @@
             },
             "completion_date": {
               "type": "date",
-	      "format": "yyyy-MM-dd"
+              "format": "yyyy-MM-dd"
             },
             "hours": {
               "properties": {
-                    "story_id": {
-                      "type": "long"
-                    },
-                    "user_id": {
-                      "type": "long"
-                    },
-                    "hours": {
-                      "type": "double"
-                    },
-		    "work_done": {
-                      "type": "text"
-		    },
-            "date": {
-              "type": "date",
-              "format": "yyyy-MM-dd"
-            }
+                "story_id": {
+                  "type": "long"
+                },
+                "user_id": {
+                  "type": "long"
+                },
+                "hours": {
+                  "type": "double"
+                },
+                "work_done": {
+                  "type": "text"
+                },
+                "date": {
+                  "type": "date",
+                  "format": "yyyy-MM-dd"
+                }
               }
             },
             "tasks": {
@@ -75,18 +75,18 @@
                 "task_name": {
                   "type": "keyword"
                 },
-            "due_date": {
-              "type": "date",
-              "format": "yyyy-MM-dd"
-            },
-            "start_date": {
-              "type": "date",
-              "format": "yyyy-MM-dd"
-            },
-            "completion_date": {
-              "type": "date",
-	      "format": "yyyy-MM-dd"
-            }
+                "due_date": {
+                  "type": "date",
+                  "format": "yyyy-MM-dd"
+                },
+                "start_date": {
+                  "type": "date",
+                  "format": "yyyy-MM-dd"
+                },
+                "completion_date": {
+                  "type": "date",
+                  "format": "yyyy-MM-dd"
+                }
               }
             }
           }

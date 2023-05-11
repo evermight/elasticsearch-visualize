@@ -1,0 +1,10 @@
+{
+  "properties": {
+    "project_id": {
+      "type": "long"
+    },
+    "project_name": {
+      "type": "text"
+    }
+  }
+}

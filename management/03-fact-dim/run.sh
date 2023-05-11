@@ -6,4 +6,3 @@
 ./fact.sh -f story;
 ./fact.sh -f task;
 ./fact.sh -f time;
-./fact.sh -f user;

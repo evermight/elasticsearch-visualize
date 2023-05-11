@@ -14,7 +14,7 @@
     },
     "date": {
       "type": "date",
-      "format": "yyyy-MM-dd"
+      "format": "strict_date_time"
     }
   }
 }

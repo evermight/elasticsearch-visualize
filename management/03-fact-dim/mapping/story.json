@@ -8,15 +8,15 @@
     },
     "due_date": {
       "type": "date",
-      "format": "yyyy-MM-dd"
+      "format": "strict_date_time"
     },
     "start_date": {
       "type": "date",
-      "format": "yyyy-MM-dd"
+      "format": "strict_date_time"
     },
     "completion_date": {
       "type": "date",
-      "format": "yyyy-MM-dd"
+      "format": "strict_date_time"
     }
   }
 }

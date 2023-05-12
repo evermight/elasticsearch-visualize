@@ -4,7 +4,12 @@
       "type": "long"
     },
     "work_done": {
-      "type": "text"
+      "type": "keyword",
+      "fields": {
+        "text": {
+          "type": "text"
+	}
+      }
     },
     "date": {
       "type": "date",

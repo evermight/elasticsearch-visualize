@@ -1,0 +1,619 @@
+{
+  "data_view": {
+    "id": "23232963-fff0-4037-badf-3e355cf42ec0",
+    "version": "WzE0NTYsMV0=",
+    "title": "enrichment_work",
+    "timeFieldName": "@timestamp",
+    "sourceFilters": [],
+    "fields": {
+      "DaysSinceDue": {
+        "count": 0,
+        "name": "DaysSinceDue",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": false,
+        "format": {
+          "id": "number"
+        },
+        "customLabel": "Days Since Due",
+        "shortDotsEnable": false,
+        "runtimeField": {
+          "type": "long",
+          "script": {
+            "source": "long current = (new Date()).getTime();\r\nlong dueDate = doc['due_date'].value.getMillis();\r\nlong days = Math.round((current - dueDate)/(1000*3600*24));\r\nemit(days);"
+          }
+        }
+      },
+      "@timestamp": {
+        "count": 0,
+        "name": "@timestamp",
+        "type": "date",
+        "esTypes": [
+          "date"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "date"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "@version": {
+        "count": 0,
+        "name": "@version",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "@version.keyword": {
+        "count": 0,
+        "name": "@version.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "@version"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "_id": {
+        "count": 0,
+        "name": "_id",
+        "type": "string",
+        "esTypes": [
+          "_id"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "_index": {
+        "count": 0,
+        "name": "_index",
+        "type": "string",
+        "esTypes": [
+          "_index"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "_score": {
+        "count": 0,
+        "name": "_score",
+        "type": "number",
+        "scripted": false,
+        "searchable": false,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "_source": {
+        "count": 0,
+        "name": "_source",
+        "type": "_source",
+        "esTypes": [
+          "_source"
+        ],
+        "scripted": false,
+        "searchable": false,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "_source"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "completion_date": {
+        "count": 0,
+        "name": "completion_date",
+        "type": "date",
+        "esTypes": [
+          "date"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "date"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "due_date": {
+        "count": 0,
+        "name": "due_date",
+        "type": "date",
+        "esTypes": [
+          "date"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "date"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "epic.completion_date": {
+        "count": 0,
+        "name": "epic.completion_date",
+        "type": "date",
+        "esTypes": [
+          "date"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "date"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "epic.due_date": {
+        "count": 0,
+        "name": "epic.due_date",
+        "type": "date",
+        "esTypes": [
+          "date"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "date"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "epic.epic_id": {
+        "count": 0,
+        "name": "epic.epic_id",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "epic.epic_name": {
+        "count": 0,
+        "name": "epic.epic_name",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "epic.start_date": {
+        "count": 0,
+        "name": "epic.start_date",
+        "type": "date",
+        "esTypes": [
+          "date"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "date"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "epic_id": {
+        "count": 0,
+        "name": "epic_id",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "priority": {
+        "count": 0,
+        "name": "priority",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "project.project_id": {
+        "count": 0,
+        "name": "project.project_id",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "project.project_name": {
+        "count": 0,
+        "name": "project.project_name",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "project_id": {
+        "count": 0,
+        "name": "project_id",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "start_date": {
+        "count": 0,
+        "name": "start_date",
+        "type": "date",
+        "esTypes": [
+          "date"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "date"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "story.completion_date": {
+        "count": 0,
+        "name": "story.completion_date",
+        "type": "date",
+        "esTypes": [
+          "date"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "date"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "story.due_date": {
+        "count": 0,
+        "name": "story.due_date",
+        "type": "date",
+        "esTypes": [
+          "date"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "date"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "story.start_date": {
+        "count": 0,
+        "name": "story.start_date",
+        "type": "date",
+        "esTypes": [
+          "date"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "date"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "story.story_id": {
+        "count": 0,
+        "name": "story.story_id",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "story.story_name": {
+        "count": 0,
+        "name": "story.story_name",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "story_id": {
+        "count": 0,
+        "name": "story_id",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "tags": {
+        "count": 0,
+        "name": "tags",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "tags.keyword": {
+        "count": 0,
+        "name": "tags.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "tags"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "task_id": {
+        "count": 0,
+        "name": "task_id",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "task_name": {
+        "count": 0,
+        "name": "task_name",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "user.user_id": {
+        "count": 0,
+        "name": "user.user_id",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "user.user_name": {
+        "count": 0,
+        "name": "user.user_name",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "user_id": {
+        "count": 0,
+        "name": "user_id",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      }
+    },
+    "typeMeta": {},
+    "fieldFormats": {},
+    "runtimeFieldMap": {
+      "DaysSinceDue": {
+        "type": "long",
+        "script": {
+          "source": "long current = (new Date()).getTime();\r\nlong dueDate = doc['due_date'].value.getMillis();\r\nlong days = Math.round((current - dueDate)/(1000*3600*24));\r\nemit(days);"
+        }
+      }
+    },
+    "fieldAttrs": {
+      "DaysSinceDue": {
+        "customLabel": "Days Since Due"
+      }
+    },
+    "allowNoIndex": false,
+    "name": "work"
+  }
+}

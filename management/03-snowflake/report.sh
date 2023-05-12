@@ -24,6 +24,14 @@ curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/${IND
 -H "Content-Type: application/json" \
 -d @$PROJECTPATH/mapping/$data_table.json
 
+if [ -f $PROJECTPATH/pipeline/$data_table.json ]; then
+  pipeline=`cat ${PROJECTPATH}/pipeline/${data_table}.json`
+  pipeline="${pipeline//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
+  curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/_ingest/pipeline/${INDEXNAME}_{$data_table}" \
+  -H "Content-Type: application/json" \
+  -d "$pipeline"
+fi
+
 logstashconf=`cat ${PROJECTPATH}/logstash/$data_table.conf`
 logstashconf="${logstashconf//\#\#JDBCJARFILE\#\#/"$JDBCJARFILE"}"
 logstashconf="${logstashconf//\#\#JDBCCONNSTRING\#\#/"$JDBCCONNSTRING"}"
@@ -35,14 +43,3 @@ logstashconf="${logstashconf//\#\#ELASTICUSER\#\#/"$ELASTICUSER"}"
 logstashconf="${logstashconf//\#\#ELASTICPASS\#\#/"$ELASTICPASS"}"
 logstashconf="${logstashconf//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
 /usr/share/logstash/bin/logstash -e "$logstashconf"
-
-if [ -f $PROJECTPATH/policy/$data_table.json ]; then
-  policy=`cat ${PROJECTPATH}/policy/${data_table}.json`
-  policy="${policy//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
-  curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/_enrich/policy/${INDEXNAME}_{$data_table}" \
-  -H "Content-Type: application/json" \
-  -d "$policy"
-
-  sleep 10
-  curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/_enrich/policy/${INDEXNAME}_{$data_table}/_execute"
-fi

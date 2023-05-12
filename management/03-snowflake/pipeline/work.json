@@ -3,7 +3,7 @@
     {
       "enrich" : {
         "description": "Add user info",
-        "policy_name": "user_policy",
+        "policy_name": "##INDEXNAME##_user",
         "field" : "user_id",
         "target_field": "user",
         "max_matches": "1"
@@ -12,7 +12,7 @@
     {
       "enrich" : {
         "description": "Add project info",
-        "policy_name": "project_policy",
+        "policy_name": "##INDEXNAME##_project",
         "field" : "project_id",
         "target_field": "project",
         "max_matches": "1"
@@ -21,7 +21,7 @@
     {
       "enrich" : {
         "description": "Add epic info",
-        "policy_name": "epic_policy",
+        "policy_name": "##INDEXNAME##_epic",
         "field" : "epic_id",
         "target_field": "epic",
         "max_matches": "1"
@@ -30,7 +30,7 @@
     {
       "enrich" : {
         "description": "Add story info",
-        "policy_name": "story_policy",
+        "policy_name": "##INDEXNAME##_story",
         "field" : "story_id",
         "target_field": "story",
         "max_matches": "1"

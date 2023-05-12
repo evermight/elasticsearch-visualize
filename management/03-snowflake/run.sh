@@ -39,11 +39,11 @@ for data_table in ${allfacts[@]}; do
 if [ -f $PROJECTPATH/policy/$data_table.json ]; then
   policy=`cat ${PROJECTPATH}/policy/${data_table}.json`
   policy="${policy//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
-  curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/_enrich/policy/${INDEXNAME}_{$data_table}_policy" \
+  curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/_enrich/policy/${INDEXNAME}_{$data_table}" \
   -H "Content-Type: application/json" \
   -d "$policy"
 
   sleep 10
-  curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/_enrich/policy/${INDEXNAME}_{$data_table}_policy/_execute"
+  curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/_enrich/policy/${INDEXNAME}_{$data_table}/_execute"
 fi
 done

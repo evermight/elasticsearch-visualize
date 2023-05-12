@@ -45,12 +45,10 @@ logstashconf="${logstashconf//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
 /usr/share/logstash/bin/logstash -e "$logstashconf"
 
 if [ -f $PROJECTPATH/kibana/data-view/$data_table.json ]; then
-#  pipeline=`cat ${PROJECTPATH}/pipeline/${data_table}.json`
-#  pipeline="${pipeline//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
-#  curl -X POST -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${KIBANAHOST}/api/saved_objects/_import" \
+  dataview=`cat ${PROJECTPATH}/kibana/data-view/${data_table}.json`
+  dataview="${dataview//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
   curl -X POST -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${KIBANAHOST}/api/data_views/data_view" \
   -H "kbn-xsrf: reporting" \
   -H "Content-Type: application/json" \
-  -d @$PROJECTPATH/kibana/data-view/$data_table.json
-#  -d "$pipeline"
+  -d "$dataview"
 fi

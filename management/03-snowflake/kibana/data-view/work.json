@@ -2,7 +2,7 @@
   "data_view": {
     "id": "23232963-fff0-4037-badf-3e355cf42ec0",
     "version": "WzE0NTYsMV0=",
-    "title": "enrichment_work",
+    "title": "##INDEXNAME##_work",
     "timeFieldName": "@timestamp",
     "sourceFilters": [],
     "fields": {
@@ -614,6 +614,6 @@
       }
     },
     "allowNoIndex": false,
-    "name": "work"
+    "name": "##INDEXNAME##_work"
   }
 }

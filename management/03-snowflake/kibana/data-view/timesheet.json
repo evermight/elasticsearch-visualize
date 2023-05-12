@@ -2,7 +2,7 @@
   "data_view": {
     "id": "26b1c9b2-d3b2-4db3-84af-cf10ba93f8c6",
     "version": "WzE2NDAsMV0=",
-    "title": "enrichment_timesheet",
+    "title": "##INDEXNAME##_timesheet",
     "timeFieldName": "date",
     "sourceFilters": [],
     "fields": {
@@ -568,6 +568,6 @@
     "runtimeFieldMap": {},
     "fieldAttrs": {},
     "allowNoIndex": false,
-    "name": "timesheet"
+    "name": "##INDEXNAME##_timesheet"
   }
 }

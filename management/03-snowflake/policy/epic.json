@@ -1,6 +1,6 @@
 {
   "match": {
-    "indices": "epic",
+    "indices": "##INDEXNAME##_epic",
     "match_field": "epic_id",
     "enrich_fields": ["epic_name", "start_date", "due_date", "completion_date"]
   }

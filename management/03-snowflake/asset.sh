@@ -1,27 +1,30 @@
 #!/bin/bash
 
+while getopts d: option
+do
+    case "${option}" in
+        d) data_table=${OPTARG};;
+    esac
+done
+
+if [ -z $data_table ]; then
+  echo '-d for data table required'
+  exit
+fi
+
 source ./.env
 
 hostprotocol="http"
 if [ "$ELASTICSSL" = "true" ]; then
   hostprotocol="https"
 fi
-allfacts=("user" "project" "epic" "story" "task" "time")
-for data_table in ${allfacts[@]}; do
-  curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/${INDEXNAME}_${data_table}"
-  curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/${INDEXNAME}_${data_table}/_mapping" \
-  -H "Content-Type: application/json" \
-  -d @$PROJECTPATH/mapping/$data_table.json
-done
-cat $PROJECTPATH/logstash/user.conf \
-$PROJECTPATH/logstash/project.conf \
-$PROJECTPATH/logstash/epic.conf \
-$PROJECTPATH/logstash/story.conf \
-$PROJECTPATH/logstash/task.conf \
-$PROJECTPATH/logstash/time.conf \
-> $PROJECTPATH/logstash/all.conf;
 
-logstashconf=`cat ${PROJECTPATH}/logstash/all.conf`
+curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/${INDEXNAME}_${data_table}"
+curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/${INDEXNAME}_${data_table}/_mapping" \
+-H "Content-Type: application/json" \
+-d @$PROJECTPATH/mapping/$data_table.json
+
+logstashconf=`cat ${PROJECTPATH}/logstash/$data_table.conf`
 logstashconf="${logstashconf//\#\#JDBCJARFILE\#\#/"$JDBCJARFILE"}"
 logstashconf="${logstashconf//\#\#JDBCCONNSTRING\#\#/"$JDBCCONNSTRING"}"
 logstashconf="${logstashconf//\#\#JDBCUSER\#\#/"$JDBCUSER"}"
@@ -33,9 +36,6 @@ logstashconf="${logstashconf//\#\#ELASTICPASS\#\#/"$ELASTICPASS"}"
 logstashconf="${logstashconf//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
 /usr/share/logstash/bin/logstash -e "$logstashconf"
 
-rm -f $PROJECTPATH/logstash/all.conf
-
-for data_table in ${allfacts[@]}; do
 if [ -f $PROJECTPATH/policy/$data_table.json ]; then
   policy=`cat ${PROJECTPATH}/policy/${data_table}.json`
   policy="${policy//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
@@ -46,4 +46,3 @@ if [ -f $PROJECTPATH/policy/$data_table.json ]; then
   sleep 10
   curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/_enrich/policy/${INDEXNAME}_{$data_table}_policy/_execute"
 fi
-done

@@ -1,6 +1,6 @@
 {
   "match": {
-    "indices": "task",
+    "indices": "##INDEXNAME##_task",
     "match_field": "task_id",
     "enrich_fields": ["task_name", "start_date", "due_date", "completion_date", "priority"]
   }

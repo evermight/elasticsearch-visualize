@@ -1,0 +1,40 @@
+{
+  "processors" : [
+    {
+      "enrich" : {
+        "description": "Add user info",
+        "policy_name": "user_policy",
+        "field" : "user_id",
+        "target_field": "user",
+        "max_matches": "1"
+      }
+    },
+    {
+      "enrich" : {
+        "description": "Add project info",
+        "policy_name": "project_policy",
+        "field" : "project_id",
+        "target_field": "project",
+        "max_matches": "1"
+      }
+    },
+    {
+      "enrich" : {
+        "description": "Add epic info",
+        "policy_name": "epic_policy",
+        "field" : "epic_id",
+        "target_field": "epic",
+        "max_matches": "1"
+      }
+    },
+    {
+      "enrich" : {
+        "description": "Add story info",
+        "policy_name": "story_policy",
+        "field" : "story_id",
+        "target_field": "story",
+        "max_matches": "1"
+      }
+    }
+  ]
+}

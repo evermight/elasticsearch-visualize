@@ -1,6 +1,6 @@
 {
   "match": {
-    "indices": "story",
+    "indices": "##INDEXNAME##_story",
     "match_field": "story_id",
     "enrich_fields": ["story_name", "start_date", "due_date", "completion_date"]
   }

@@ -1,5 +1,4 @@
 {
-  "type": "nested",
   "properties": {
     "epic_id": {
       "type": "long"

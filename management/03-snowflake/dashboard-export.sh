@@ -1,5 +1,18 @@
 #!/bin/bash
 
+while getopts i: option
+do
+    case "${option}" in
+        i) dvid=${OPTARG};;
+    esac
+done
+
+if [ -z $dvid ]; then
+  echo '-i for dashboard id required'
+  exit
+fi
+
+
 source ./.env
 
 hostprotocol="http"
@@ -12,7 +25,7 @@ curl -X POST -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${KIBANAHOST}/api/s
   "objects": [
     {
       "type": "dashboard",
-      "id": "73bc811f-b382-4fd8-81d1-3f24c8309ad5"
+      "id": "'$dvid'"
     }
   ]
-}' > kibana/dashboard/management.ndjson
+}'

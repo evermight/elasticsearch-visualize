@@ -1,0 +1,94 @@
+{
+  "properties": {
+    "Additional coverage - Cost to include LL": {
+      "type": "double"
+    },
+    "Additional coverage - Upgraded DRP Cost": {
+      "type": "double"
+    },
+    "Cancelled": {
+      "type": "long"
+    },
+    "Credit card name": {
+      "type": "text"
+    },
+    "DRP Limit": {
+      "type": "long"
+    },
+    "Event Dates": {
+      "type": "keyword"
+    },
+    "Event Name": {
+      "type": "text"
+    },
+    "Event Type": {
+      "type": "keyword"
+    },
+    "Facility": {
+      "type": "keyword"
+    },
+    "GLL Limit": {
+      "type": "keyword"
+    },
+    "Insured Name (or company)": {
+      "type": "text"
+    },
+    "Last 4 of CC": {
+      "type": "long"
+    },
+    "Liquor Liability": {
+      "type": "long"
+    },
+    "Number of attendees": {
+      "type": "long"
+    },
+    "Number of days": {
+      "type": "long"
+    },
+    "Payment - basic coverage": {
+      "type": "double"
+    }
+,    "Policy number": {
+      "type": "keyword"
+    },
+    "Premium before surcharge": {
+      "type": "double"
+    },
+    "Producer": {
+      "type": "keyword",
+      "fields": {
+        "text": {
+        "type": "text"
+        }
+      }
+    },
+    "Purchase Date": {
+      "type": "date",
+      "format": "M/d/yyyy"
+    },
+    "Total Payment": {
+      "type": "double"
+    },
+    "Venue": {
+      "type": "keyword",
+      "fields": {
+        "text": {
+          "type": "text"
+          
+        }
+      }
+    },
+    "Venue Address": {
+      "type": "text"
+    },
+    "Venue City": {
+      "type": "keyword"
+    },
+    "Venue State": {
+      "type": "keyword"
+    },
+    "Venue Zip": {
+      "type": "keyword"
+    }
+  }
+}

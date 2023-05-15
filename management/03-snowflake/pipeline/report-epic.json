@@ -1,0 +1,13 @@
+{
+  "processors" : [
+    {
+      "enrich" : {
+        "description": "Add project info",
+        "policy_name": "##INDEXNAME##_project",
+        "field" : "project_id",
+        "target_field": "project",
+        "max_matches": "1"
+      }
+    }
+  ]
+}

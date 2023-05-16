@@ -1,17 +1,5 @@
 #!/bin/bash
 
-while getopts d: option
-do
-    case "${option}" in
-        d) data_table=${OPTARG};;
-    esac
-done
-
-if [ -z $data_table ]; then
-  echo '-d for data table required'
-  exit
-fi
-
 source ./.env
 
 hostprotocol="http"
@@ -19,11 +7,14 @@ if [ "$ELASTICSSL" = "true" ]; then
   hostprotocol="https"
 fi
 
-curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/${INDEXNAME}_${data_table}"
-curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/${INDEXNAME}_${data_table}/_mapping" \
+curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/${INDEXNAME}_report"
+curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/${INDEXNAME}_report/_mapping" \
 -H "Content-Type: application/json" \
--d @$PROJECTPATH/mapping/$data_table.json
+-d @$PROJECTPATH/mapping/report.json
 
+allfacts=("report-epic" "report-story" "report-task" "report-time")
+
+for data_table in ${allfacts[@]}; do
 if [ -f $PROJECTPATH/pipeline/$data_table.json ]; then
   pipeline=`cat ${PROJECTPATH}/pipeline/${data_table}.json`
   pipeline="${pipeline//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
@@ -31,8 +22,14 @@ if [ -f $PROJECTPATH/pipeline/$data_table.json ]; then
   -H "Content-Type: application/json" \
   -d "$pipeline"
 fi
+done
 
-logstashconf=`cat ${PROJECTPATH}/logstash/$data_table.conf`
+echo '' > $PROJECTPATH/logstash/report.conf;
+for data_table in ${allfacts[@]}; do
+  cat $PROJECTPATH/logstash/$data_table.conf >> $PROJECTPATH/logstash/report.conf
+done
+
+logstashconf=`cat ${PROJECTPATH}/logstash/report.conf`
 logstashconf="${logstashconf//\#\#JDBCJARFILE\#\#/"$JDBCJARFILE"}"
 logstashconf="${logstashconf//\#\#JDBCCONNSTRING\#\#/"$JDBCCONNSTRING"}"
 logstashconf="${logstashconf//\#\#JDBCUSER\#\#/"$JDBCUSER"}"
@@ -44,11 +41,9 @@ logstashconf="${logstashconf//\#\#ELASTICPASS\#\#/"$ELASTICPASS"}"
 logstashconf="${logstashconf//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
 /usr/share/logstash/bin/logstash -e "$logstashconf"
 
-if [ -f $PROJECTPATH/kibana/data-view/$data_table.json ]; then
-  dataview=`cat ${PROJECTPATH}/kibana/data-view/${data_table}.json`
-  dataview="${dataview//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
-  curl -X POST -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${KIBANAHOST}/api/data_views/data_view" \
-  -H "kbn-xsrf: reporting" \
-  -H "Content-Type: application/json" \
-  -d "$dataview"
-fi
+#dataview=`cat ${PROJECTPATH}/kibana/data-view/report.json`
+#dataview="${dataview//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
+#curl -X POST -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${KIBANAHOST}/api/data_views/data_view" \
+#-H "kbn-xsrf: reporting" \
+#-H "Content-Type: application/json" \
+#-d "$dataview"

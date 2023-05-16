@@ -1,0 +1,7 @@
+{
+  "match": {
+    "indices": "##INDEXNAME##_time",
+    "match_field": "time_id",
+    "enrich_fields": ["work_done", "hours", "date"]
+  }
+}

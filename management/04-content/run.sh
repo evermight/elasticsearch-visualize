@@ -6,6 +6,7 @@ hostprotocol="http"
 if [ "$ELASTICSSL" = "true" ]; then
   hostprotocol="https"
 fi
+
 allfacts=("user" "project" "epic" "story" "task" "time")
 for data_table in ${allfacts[@]}; do
   curl -X PUT -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${ELASTICHOST}/${INDEXNAME}_${data_table}"
@@ -13,13 +14,11 @@ for data_table in ${allfacts[@]}; do
   -H "Content-Type: application/json" \
   -d @$PROJECTPATH/mapping/$data_table.json
 done
-cat $PROJECTPATH/logstash/user.conf \
-$PROJECTPATH/logstash/project.conf \
-$PROJECTPATH/logstash/epic.conf \
-$PROJECTPATH/logstash/story.conf \
-$PROJECTPATH/logstash/task.conf \
-$PROJECTPATH/logstash/time.conf \
-> $PROJECTPATH/logstash/all.conf;
+
+echo '' > $PROJECTPATH/logstash/all.conf;
+for data_table in ${allfacts[@]}; do
+  cat $PROJECTPATH/logstash/$data_table.conf >> $PROJECTPATH/logstash/all.conf
+done
 
 logstashconf=`cat ${PROJECTPATH}/logstash/all.conf`
 logstashconf="${logstashconf//\#\#JDBCJARFILE\#\#/"$JDBCJARFILE"}"

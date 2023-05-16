@@ -1,22 +1,7 @@
 {
   "properties": {
-    "time_id": {
-      "type": "long"
-    },
-    "work_done": {
-      "type": "keyword",
-      "fields": {
-        "text": {
-          "type": "text"
-	}
-      }
-    },
-    "date": {
-      "type": "date",
-      "format": "strict_date_time"
-    },
-    "hours": {
-      "type": "double"
+    "content_type": {
+      "type": "keyword"
     },
     "user_id": {
       "type": "long"
@@ -28,6 +13,9 @@
       "type": "long"
     },
     "story_id": {
+      "type": "long"
+    },
+    "task_id": {
       "type": "long"
     },
     "user": {
@@ -79,6 +67,42 @@
         "completion_date": {
           "type": "date",
           "format": "strict_date_time"
+        }
+      }
+    },
+    "task": {
+      "properties": {
+        "task_name": {
+          "type": "keyword"
+        },
+        "due_date": {
+          "type": "date",
+          "format": "strict_date_time"
+        },
+        "start_date": {
+          "type": "date",
+          "format": "strict_date_time"
+        },
+        "completion_date": {
+          "type": "date",
+          "format": "strict_date_time"
+        },
+        "priority": {
+          "type": "long"
+        }
+      }
+    },
+    "time": {
+      "properties": {
+        "work_done": {
+          "type": "text"
+        },
+        "date": {
+          "type": "date",
+          "format": "strict_date_time"
+        },
+        "hours": {
+          "type": "float"
         }
       }
     }

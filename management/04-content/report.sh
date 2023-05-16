@@ -41,9 +41,9 @@ logstashconf="${logstashconf//\#\#ELASTICPASS\#\#/"$ELASTICPASS"}"
 logstashconf="${logstashconf//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
 /usr/share/logstash/bin/logstash -e "$logstashconf"
 
-#dataview=`cat ${PROJECTPATH}/kibana/data-view/report.json`
-#dataview="${dataview//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
-#curl -X POST -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${KIBANAHOST}/api/data_views/data_view" \
-#-H "kbn-xsrf: reporting" \
-#-H "Content-Type: application/json" \
-#-d "$dataview"
+dataview=`cat ${PROJECTPATH}/kibana/data-view/report.json`
+dataview="${dataview//\#\#INDEXNAME\#\#/"$INDEXNAME"}"
+curl -X POST -u $ELASTICUSER:$ELASTICPASS "${hostprotocol}://${KIBANAHOST}/api/data_views/data_view" \
+-H "kbn-xsrf: reporting" \
+-H "Content-Type: application/json" \
+-d "$dataview"

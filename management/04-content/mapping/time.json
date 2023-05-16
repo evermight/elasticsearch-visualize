@@ -1,0 +1,20 @@
+{
+  "properties": {
+    "story_id": {
+      "type": "long"
+    },
+    "user_id": {
+      "type": "long"
+    },
+    "hours": {
+      "type": "double"
+    },
+    "work_done": {
+      "type": "text"
+    },
+    "date": {
+      "type": "date",
+      "format": "strict_date_time"
+    }
+  }
+}

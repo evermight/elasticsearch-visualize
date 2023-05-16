@@ -1,0 +1,31 @@
+{
+  "processors" : [
+    {
+      "enrich" : {
+        "description": "Add project info",
+        "policy_name": "##INDEXNAME##_project",
+        "field" : "project_id",
+        "target_field": "project",
+        "max_matches": "1"
+      }
+    },
+    {
+      "enrich" : {
+        "description": "Add epic info",
+        "policy_name": "##INDEXNAME##_epic",
+        "field" : "epic_id",
+        "target_field": "epic",
+        "max_matches": "1"
+      }
+    },
+    {
+      "enrich" : {
+        "description": "Add story info",
+        "policy_name": "##INDEXNAME##_story",
+        "field" : "story_id",
+        "target_field": "story",
+        "max_matches": "1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "task_id": {
+      "type": "long"
+    },
+    "task_name": {
+      "type": "keyword"
+    },
+    "due_date": {
+      "type": "date",
+      "format": "strict_date_time"
+    },
+    "start_date": {
+      "type": "date",
+      "format": "strict_date_time"
+    },
+    "completion_date": {
+      "type": "date",
+      "format": "strict_date_time"
+    }
+  }
+}

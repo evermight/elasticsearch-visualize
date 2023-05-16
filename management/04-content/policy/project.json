@@ -1,0 +1,7 @@
+{
+  "match": {
+    "indices": "##INDEXNAME##_project",
+    "match_field": "project_id",
+    "enrich_fields": ["project_name"]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "match": {
+    "indices": "##INDEXNAME##_user",
+    "match_field": "user_id",
+    "enrich_fields": ["user_name"]
+  }
+}
